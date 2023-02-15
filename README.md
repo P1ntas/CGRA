@@ -4,7 +4,7 @@
 | Name             | Number    | E-Mail                |
 | ---------------- | --------- | ------------------    |
 | Afonso Pinto     | 202008014 | up202008014@fe.up.pt  |
-| Jane Doe         | 201901011 | ...                   |
+| Miguel Teixeira  | 202005208 | up202005208@fe.up.pt  |  
 
 ----
 

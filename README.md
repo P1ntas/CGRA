@@ -1,6 +1,6 @@
 # CG 2022/2023
 
-## Group T0xG0y
+## Group T06G010
 | Name             | Number    | E-Mail                |
 | ---------------- | --------- | ------------------    |
 | Afonso Pinto     | 202008014 | up202008014@fe.up.pt  |

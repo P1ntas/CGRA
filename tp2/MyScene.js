@@ -1,6 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis } from "../lib/CGF.js";
 import { MyTangram } from "./MyTangram.js";
 import { MyUnitCube } from "./MyUnitCube.js";
+import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
 
 /**
  * MyScene
@@ -28,6 +29,7 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.tangram = new MyTangram(this);
     this.cube = new MyUnitCube(this);
+    this.cubequad = new MyUnitCubeQuad(this);
     //Objects connected to MyInterface
     this.displayAxis = true;
    
@@ -72,7 +74,7 @@ export class MyScene extends CGFscene {
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
-    
+    /*
     this.pushMatrix();
     this.translate(2.1, 0, 2.1);
     this.rotate(-Math.PI/2, 1, 0, 0);
@@ -81,6 +83,16 @@ export class MyScene extends CGFscene {
     this.translate(0,0,-0.5);
     this.cube.display();
     this.popMatrix();
+    this.popMatrix();
+     */ 
+
+
+    this.pushMatrix();
+   
+    this.translate(2.1, 0, 2.1);
+    this.rotate(-Math.PI/2, 1, 0, 0);
+    this.translate(0,0,-0.5);
+    this.cubequad.display();
     this.popMatrix();
 
     this.axis.display();

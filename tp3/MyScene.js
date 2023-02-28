@@ -13,6 +13,7 @@ export class MyScene extends CGFscene {
     }
     init(application) {
         super.init(application);
+        
         this.initCameras();
         this.initLights();
         this.initMaterials();
@@ -31,6 +32,7 @@ export class MyScene extends CGFscene {
         this.cone = new MyCone(this, 3, 1);
         this.pyramid = new MyPyramid(this, 3, 1);
         
+        
         this.objects = [this.plane, this.pyramid, this.cone];
 
         // Labels and ID's for object selection on MyInterface
@@ -43,6 +45,7 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.objectComplexity = 0.5;
         this.scaleFactor = 2.0;
+        this.amlight = 0.3;
 
     }
     initLights() {
@@ -155,7 +158,7 @@ export class MyScene extends CGFscene {
         
         this.lights[0].update();
         this.lights[1].update();
-
+        this.setGlobalAmbientLight(this.amlight, this.amlight, this.amlight, 1.0);
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
@@ -163,7 +166,7 @@ export class MyScene extends CGFscene {
         // ---- BEGIN Primitive drawing section
 
         this.materials[this.selectedMaterial].apply();
-
+        
         this.pushMatrix();
         this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
         

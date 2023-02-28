@@ -17,8 +17,11 @@ export class MyInterface extends CGFinterface {
         // https://github.com/dataarts/dat.gui/blob/master/API.md
         this.gui = new dat.GUI();
 
+        this.gui.add(this.scene,'amlight',0.3,1.0).name('Ambient Light');
         this.gui.add(this.scene, 'displayAxis').name("Display axis");
         this.gui.add(this.scene, 'displayNormals').name("Display normals");
+
+        
 
         // example of a dropdown that has numeric ID's associated, 
         // and an event handler to be called when the selection changes
@@ -58,6 +61,8 @@ export class MyInterface extends CGFinterface {
         f2.addColor(this.scene.customMaterialValues,'Specular').onChange(this.scene.updateCustomMaterial.bind(this.scene));
         f2.add(this.scene.customMaterialValues,'Shininess', 0, 100).onChange(this.scene.updateCustomMaterial.bind(this.scene));
 
+
+        
         return true;
     }
 

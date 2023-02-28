@@ -72,14 +72,16 @@ export class MyScene extends CGFscene {
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
-  
     
+    this.pushMatrix();
+    this.translate(2.1, 0, 2.1);
+    this.rotate(-Math.PI/2, 1, 0, 0);
     this.tangram.display();
     this.pushMatrix();
     this.translate(0,0,-0.5);
     this.cube.display();
     this.popMatrix();
-  
+    this.popMatrix();
 
     this.axis.display();
 

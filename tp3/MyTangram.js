@@ -90,7 +90,7 @@ export class MyTangram extends CGFobject {
     this.scene.popMatrix();
 
 
-    //Smnall triangle left
+    //Small triangle left
     this.scene.pushMatrix();
     this.scene.translate(-2.1,1.1,0);
     this.scene.rotate(-Math.PI/2,0,0,1);
@@ -106,6 +106,30 @@ export class MyTangram extends CGFobject {
     this.scene.popMatrix();
 
     
-    
   }
+
+  enableNormalViz() {
+    this.diamond.enableNormalViz();
+    this.triangle1.enableNormalViz();
+    this.triangle2.enableNormalViz();
+    this.triangle3.enableNormalViz();
+    this.parallelogram.enableNormalViz();
+    this.triangle4.enableNormalViz();
+    this.triangle5.enableNormalViz();
+    }
+
+    disableNormalViz() {
+      this.diamond.disableNormalViz();
+      this.triangle1.disableNormalViz();
+      this.triangle2.disableNormalViz();
+      this.triangle3.disableNormalViz();
+      this.parallelogram.disableNormalViz();
+      this.triangle4.disableNormalViz();
+      this.triangle5.disableNormalViz();
+      }
+
+    updateBuffers(complexity) {
+      this.initBuffers();
+      this.initNormalVizBuffers();
+    }
 }

@@ -19,6 +19,7 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'displayAxis').name("Display axis");
         this.gui.add(this.scene, 'displayNormals').name("Display normals");
+        this.gui.add(this.scene,'ambLight', 0.1, 1.0).name('Ambient Light');
 
         // example of a dropdown that has numeric ID's associated, 
         // and an event handler to be called when the selection changes

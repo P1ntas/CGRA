@@ -44,11 +44,53 @@ export class MyUnitCube extends CGFobject {
             2, 3, 6,
             3, 7, 6,
 		];
+
+		this.normals = [
+			//Face de cima
+			0,1,0,
+			0,1,0,
+			0,1,0,
+			0,1,0,
+
+			//Face de baixo
+			0,-1,0,
+			0,-1,0,
+			0,-1,0,
+			0,-1,0,
+
+			//Face à frente
+			0,0,1,
+			0,0,1,
+			0,0,1,
+			0,0,1,
+
+			//Face à direita
+			1,0,0,
+			1,0,0,
+			1,0,0,
+			1,0,0,
+
+			//Face atrás
+			0,0,-1,
+			0,0,-1,
+			0,0,-1,
+			0,0,-1,
+
+			//Face à esquerda
+			-1,0,0,
+			-1,0,0,
+			-1,0,0,
+			-1,0,0
+		];
 		
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
 		this.primitiveType = this.scene.gl.TRIANGLES;
 
 		this.initGLBuffers();
+	}
+	updateBuffers(complexity) {
+		this.initBuffers;
+		this.initNormalVizBuffers();
 	}
 }

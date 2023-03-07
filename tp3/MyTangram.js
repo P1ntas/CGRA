@@ -99,7 +99,7 @@ export class MyTangram extends CGFobject {
     this.scene.pushMatrix();
     //this.scene.rotate(Math.PI/4,0,0,1);
     this.scene.multMatrix(MatrixRotate);
-    this.square.apply;
+    //this.square.apply();
     if(this.displayDiamond) this.diamond.display();
     this.scene.popMatrix();
 
@@ -109,7 +109,7 @@ export class MyTangram extends CGFobject {
     //Big triangle orange right
     this.scene.pushMatrix();
     this.scene.translate(2.1,-0.9,0);
-    this.rightTriangle.apply();
+    //this.rightTriangle.apply();
     if(this.displayTriangle1) this.triangle1.display();
     this.scene.popMatrix();
 
@@ -118,7 +118,7 @@ export class MyTangram extends CGFobject {
     this.scene.pushMatrix();
     this.scene.rotate(Math.PI,0,1,0);
     this.scene.translate(2.1,-0.9,0);
-    this.leftTriangle.apply();
+    //this.leftTriangle.apply();
     if(this.displayTriangle2) this.triangle2.display();
     this.scene.popMatrix();
 
@@ -127,7 +127,7 @@ export class MyTangram extends CGFobject {
     this.scene.translate(-0.71,2.107,0);
     this.scene.rotate(Math.PI,0,0,1);
     this.scene.scale(0.705,0.716,1);
-    this.invTriangle.apply();
+    //this.invTriangle.apply();
     if(this.displayTriangle3) this.triangle3.display();
     this.scene.popMatrix();
     
@@ -140,7 +140,7 @@ export class MyTangram extends CGFobject {
     this.scene.rotate(Math.PI,0,1,0);
     this.scene.rotate(3*Math.PI/4,0,0,1);
     
-    this.paral.apply();
+    //this.paral.apply();
     if(this.displayParallelogram) this.parallelogram.display();
     this.scene.popMatrix();
 
@@ -149,7 +149,7 @@ export class MyTangram extends CGFobject {
     this.scene.pushMatrix();
     this.scene.translate(-2.1,1.1,0);
     this.scene.rotate(-Math.PI/2,0,0,1);
-    this.smalLeftTriangle.apply();
+    //this.smalLeftTriangle.apply();
     if(this.displayTriangle4) this.triangle4.display();
     this.scene.popMatrix();
 
@@ -158,7 +158,7 @@ export class MyTangram extends CGFobject {
     this.scene.pushMatrix();
     this.scene.translate(2.1,1.1,0);
     this.scene.rotate(Math.PI/2,0,0,1);
-    this.smalRightTriangle.apply();
+    //this.smalRightTriangle.apply();
     if(this.displayTriangle5) this.triangle5.display();
     this.scene.popMatrix();
 

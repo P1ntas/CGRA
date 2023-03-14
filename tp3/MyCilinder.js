@@ -31,27 +31,17 @@ export class MyCylinder extends CGFobject {
 
                 var z = i * (1 / this.stacks);
                 this.vertices.push(x, y, z);
-                this.vertices.push(x, y, z);
-
-                var alpha = Math.cos(ang - (periode/ 2));
-                var beta = Math.sin(ang - (periode/ 2));
-                var gamma = 0;
-                this.normals.push(alpha, beta, gamma);
-
-                var zeta = Math.cos(ang + (periode/ 2));
-                var e = Math.sin(ang + (periode/ 2));
-                var f = 0;
-                this.normals.push(zeta, e, f);
+                this.normals.push(x, y, 0);
             }
         }
-		var level = 2 * (this.stacks + 1);
+		var level = this.stacks + 1;
 		for (var i = 0; i < this.stacks; i++) {
 			for (var j = 0; j < this.slices ; j++) {
 
-				var a = 1 + i * 2 + level * j;
-				var b = a + 2;
-				var c = a + level - 1;
-				var d = c + 2;
+				var a = i + level * j;
+				var b = a + 1;
+				var c = a + level;
+				var d = c + 1;
 
 				a = a >= (this.vertices.length / 3) ? a - this.vertices.length / 3 : a;
 				b = b >= (this.vertices.length / 3) ? b - this.vertices.length / 3 : b;

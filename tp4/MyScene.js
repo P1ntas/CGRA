@@ -1,5 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../lib/CGF.js";
 import { MyQuad } from "./MyQuad.js";
+import { MyTangram } from "./MyTangram.js";
+import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
 
 /**
  * MyScene
@@ -27,6 +29,20 @@ export class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.quad = new MyQuad(this);
+        this.tangram = new MyTangram(this);
+
+        this.mineTop = new CGFtexture(this, 'images/mineTop.png')
+        this.mineSide = new CGFtexture(this, 'images/mineSide.png')
+        this.mineBottom = new CGFtexture(this, 'images/mineBottom.png')
+
+        this.unitCubeQuad = new MyUnitCubeQuad(this,
+            this.mineTopTexture,
+            this.mineSideTexture,
+            this.mineSideTexture,
+            this.mineSideTexture,
+            this.mineSideTexture,
+            this.mineBottomTexture
+          )
 
         //------ Applied Material
         this.quadMaterial = new CGFappearance(this);
@@ -50,6 +66,10 @@ export class MyScene extends CGFscene {
         this.selectedTexture = -1;        
         this.wrapS = 0;
         this.wrapT = 0;
+        this.displayQuad=true;
+        this.displayMaterial = true;
+        this.displayTangram = false;
+        this.displayUnitCube = false;
 
         this.textures = [this.texture1, this.texture2, this.texture3];
         this.texCoords = [0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0];
@@ -116,7 +136,7 @@ export class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
-        this.quadMaterial.apply();
+        if(this.displayMaterial) this.quadMaterial.apply();
 
         // Default texture filtering in WebCGF is LINEAR. 
         // Uncomment next line for NEAREST when magnifying, or 
@@ -124,7 +144,11 @@ export class MyScene extends CGFscene {
         
         // this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
-        this.quad.display();
+        if(this.displayQuad) this.quad.display();
+
+        if(this.displayTangram) this.tangram.display();
+
+        if(this.displayUnitCube) this.unitCubeQuad.display();
 
         // ---- END Primitive drawing section
     }

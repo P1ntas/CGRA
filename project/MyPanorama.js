@@ -1,12 +1,16 @@
-import {CGFobject} from '../lib/CGF.js';
+import {CGFobject,  CGFappearance} from '../lib/CGF.js';
 
-export class MySphere extends CGFobject {
-  constructor(scene, slices, stacks) {
+export class MyPanorama extends CGFobject {
+  constructor(scene, slices, stacks, radius, texture) {
     super(scene);
     this.longitude = slices;
     this.latitude = stacks * 2;
+    this.radius = radius;
+    this.texture = texture;
 
     this.initBuffers();
+
+    //this.initTextures(scene);
   }
   initBuffers() {
 
@@ -26,6 +30,10 @@ export class MySphere extends CGFobject {
     var textLongInv = 1 / this.longitude;
     var textLatInv= 1 / this.latitude;
 
+    var camPosX = this.scene.camera.position[0];
+    var camPosY = this.scene.camera.position[1];
+    var camPosZ = this.scene.camera.position[2];
+
     for (let i = 0; i <= this.latitude; i++) {
       var sinAlpha = Math.sin(alpha);
       var cosAlpha = Math.cos(alpha);
@@ -35,9 +43,14 @@ export class MySphere extends CGFobject {
 
       for (let j = 0; j <= this.longitude; j++) {
 
-        var x = Math.cos(theta) * sinAlpha;
-        var y = cosAlpha;
-        var z = Math.sin(-theta) * sinAlpha;
+        var x = this.radius * Math.cos(theta) * sinAlpha;
+        var y = this.radius * cosAlpha;
+        var z = this.radius * Math.sin(-theta) * sinAlpha;
+
+        x += camPosX;
+        y += camPosY;
+        z += camPosZ;
+
         this.vertices.push(x, y, z);
         
         this.texCoords.push(textLong, textLat);
@@ -47,11 +60,11 @@ export class MySphere extends CGFobject {
           var current = i * latVertexes + j;
           var next = current + latVertexes;
           
-          this.indices.push(current + 1, current, next);
-          this.indices.push(current + 1, next, next + 1);
+          this.indices.push(current, current + 1, next);
+          this.indices.push(next, current + 1, next + 1);
         }
 
-        this.normals.push(x, y, z);
+        this.normals.push(-x, -y, -z);
         theta += thetaInc;
 
         textLong += textLongInv;
@@ -64,6 +77,18 @@ export class MySphere extends CGFobject {
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
+
+  /*initTextures(scene) {
+    this.tex = new CGFappearance(scene);
+    this.tex.setAmbient(0.1, 0.1, 0.1, 1);
+    this.tex.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.tex.setSpecular(0.1, 0.1, 0.1, 1);
+    this.tex.setShininess(10.0);
+    this.tex.loadTexture("images/panorama4.jpg");
+    this.tex.setTextureWrap('REPEAT', 'REPEAT');
+  }*/
+
+
   updateSlices(complexity){
     this.longitude=complexity;
 
@@ -80,5 +105,13 @@ export class MySphere extends CGFobject {
       this.textCoords = [...coords];
       this.updateTexCoordsGLBuffers
     }
+
+  /*display() {
+    this.scene.pushMatrix();
+    this.tex.apply();
+    
+    this.scene.popMatrix();
+  }*/
+
   }
   

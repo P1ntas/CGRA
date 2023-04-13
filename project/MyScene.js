@@ -1,6 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
 import { MySphere } from "./MySphere.js";
+import { MyPanorama } from "./MyPanorama.js";
 
 /**
  * MyScene
@@ -24,15 +25,22 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
+    this.texPanorama = new CGFtexture(this, "images/panorama4.jpg");
+
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.sphere = new MySphere(this, 16, 8);
+    this.panorama = new MyPanorama(this, 32, 16, 200, this.texPanorama);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
-    this.displaySphere = true;
+
     this.displayNormals  = false;
+
+    this.displayPlane = false;
+    this.displaySphere = false;
+    this.displayPanorama = true;
     this.scaleFactor = 1;
 
     this.enableTextures(true);
@@ -46,6 +54,11 @@ this.texture2 = new CGFtexture(this, "images/earth.jpg")
 this.appearance2 = new CGFappearance(this);
 this.appearance2.setTexture(this.texture2);
 this.appearance2.setTextureWrap('REPEAT', 'REPEAT');
+
+this.appearance3 = new CGFappearance(this);
+this.appearance3.setTexture(this.texPanorama);
+this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
+
 
 
   }
@@ -83,11 +96,11 @@ this.appearance2.setTextureWrap('REPEAT', 'REPEAT');
 
     // Draw axis
     if (this.displayAxis) this.axis.display();
-    if (this.displaySphere) this.sphere.display();
-    if (this.displayNormals)
-            this.sphere.enableNormalViz();
-        else
-            this.sphere.disableNormalViz();
+
+    if (this.displayNormals) this.sphere.enableNormalViz();
+    else this.sphere.disableNormalViz();
+
+    if (this.displayPanorama) this.panorama.display();
 
     // ---- BEGIN Primitive drawing section
 
@@ -96,12 +109,17 @@ this.appearance2.setTextureWrap('REPEAT', 'REPEAT');
     this.translate(0,-100,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
+    if(this.displayPlane) this.plane.display();
     this.popMatrix();
 
     this.pushMatrix();
     this.appearance2.apply();
-    this.sphere.display();
+    if (this.displaySphere) this.sphere.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.appearance3.apply();
+    if (this.displayPanorama) this.panorama.display();
     this.popMatrix();
 
     // ---- END Primitive drawing section

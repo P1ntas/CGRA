@@ -31,10 +31,10 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.sphere = new MySphere(this, 16, 8);
-    this.panorama = new MyPanorama(this, 32, 16, 200, this.texPanorama);
+    this.panorama = new MyPanorama(this, this.texPanorama);
 
     //Objects connected to MyInterface
-    this.displayAxis = true;
+    this.displayAxis = false;
 
     this.displayNormals  = false;
 

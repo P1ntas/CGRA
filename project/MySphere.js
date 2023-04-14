@@ -1,10 +1,11 @@
 import {CGFobject} from '../lib/CGF.js';
 
 export class MySphere extends CGFobject {
-  constructor(scene, slices, stacks) {
+  constructor(scene, slices, stacks, radius) {
     super(scene);
     this.longitude = slices;
     this.latitude = stacks * 2;
+    this.radius = radius;
 
     this.initBuffers();
   }
@@ -35,9 +36,10 @@ export class MySphere extends CGFobject {
 
       for (let j = 0; j <= this.longitude; j++) {
 
-        var x = Math.cos(theta) * sinAlpha;
-        var y = cosAlpha;
-        var z = Math.sin(-theta) * sinAlpha;
+        var x = this.radius * Math.cos(theta) * sinAlpha;
+        var y = this.radius * cosAlpha;
+        var z = this.radius * Math.sin(-theta) * sinAlpha;
+
         this.vertices.push(x, y, z);
         
         this.texCoords.push(textLong, textLat);
@@ -47,11 +49,11 @@ export class MySphere extends CGFobject {
           var current = i * latVertexes + j;
           var next = current + latVertexes;
           
-          this.indices.push(current + 1, current, next);
-          this.indices.push(current + 1, next, next + 1);
+          this.indices.push(current, current + 1, next);
+          this.indices.push(next, current + 1, next + 1);
         }
 
-        this.normals.push(x, y, z);
+        this.normals.push(-x, -y, -z);
         theta += thetaInc;
 
         textLong += textLongInv;

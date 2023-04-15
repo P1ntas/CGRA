@@ -100,11 +100,8 @@ this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
     if (this.displayNormals) this.sphere.enableNormalViz();
     else this.sphere.disableNormalViz();
 
-    if (this.displayPanorama) this.panorama.display();
-
     // ---- BEGIN Primitive drawing section
 
-    if (this.displayTerrain) this.terrain.display();
     /*this.pushMatrix();
     this.appearance.apply();
     this.translate(0,-100,0);
@@ -121,6 +118,11 @@ this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
     this.pushMatrix();
     this.appearance3.apply();
     if (this.displayPanorama) this.panorama.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    if (this.displayTerrain) this.terrain.display();
+    this.setActiveShader(this.defaultShader);
     this.popMatrix();
 
     // ---- END Primitive drawing section

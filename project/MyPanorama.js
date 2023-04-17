@@ -20,24 +20,6 @@ export class MyPanorama extends CGFobject {
   }
 
 
-  updateSlices(complexity){
-    this.longitude=complexity;
-
-    this.initBuffers();
-    this.center = this.scene.camera.position;
-    this.initNormalVizBuffers();
-  }
-  updateStacks(complexity){
-    this.latitude=complexity*2;
-
-    this.initBuffers();
-    this.initNormalVizBuffers();
-    }
-    updateTextCoords(coords) {
-      this.textCoords = [...coords];
-      this.updateTexCoordsGLBuffers
-    }
-
     display() {
       this.scene.pushMatrix()
 

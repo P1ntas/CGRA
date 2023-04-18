@@ -1,11 +1,14 @@
 import {CGFobject} from '../lib/CGF.js';
 
 export class MySphere extends CGFobject {
-  constructor(scene, slices, stacks, radius) {
+  constructor(scene, slices, stacks, radius, mode) {
     super(scene);
     this.slices = slices;
     this.stacks = stacks * 2;
-    this.radius = radius;
+    if (mode == "sphere") this.radius = 1;
+    else if (mode == "panorama") this.radius = radius;
+
+    this.mode = mode;
 
     this.initBuffers();
   }
@@ -49,11 +52,20 @@ export class MySphere extends CGFobject {
           var current = i * latVertexes + j;
           var next = current + latVertexes;
           
-          this.indices.push(current, current + 1, next);
-          this.indices.push(next, current + 1, next + 1);
+          if (this.mode == "panorama") {
+            this.indices.push(current, current + 1, next);
+            this.indices.push(next, current + 1, next + 1);
+          }
+          else if (this.mode == "sphere"){
+            this.indices.push(current + 1, current, next);
+            this.indices.push(current + 1, next, next + 1);
+          }
+
         }
 
-        this.normals.push(-x, -y, -z);
+        if (this.mode == "panorama") this.normals.push(-x, -y, -z);
+        else if (this.mode == "sphere") this.normals.push(x, y, z);
+        
         theta += thetaInc;
 
         textLong += textLongInv;

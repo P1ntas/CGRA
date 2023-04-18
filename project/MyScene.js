@@ -30,7 +30,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.terrain = new MyTerrain(this, 20);
-    this.sphere = new MySphere(this, 16, 8);
+    this.sphere = new MySphere(this, 16, 8, 1, "sphere");
     this.panorama = new MyPanorama(this, this.texPanorama);
 
     //Objects connected to MyInterface
@@ -97,8 +97,16 @@ this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
-    if (this.displayNormals) this.sphere.enableNormalViz();
-    else this.sphere.disableNormalViz();
+    if (this.displayNormals) {
+      this.sphere.enableNormalViz();
+      this.panorama.sphere.enableNormalViz();
+      this.terrain.plane.enableNormalViz();
+    }
+    else {
+      this.sphere.disableNormalViz();
+      this.panorama.sphere.disableNormalViz();
+      this.terrain.plane.disableNormalViz();
+    }
 
     // ---- BEGIN Primitive drawing section
 

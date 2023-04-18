@@ -15,6 +15,8 @@ export class MyTerrain extends CGFobject {
     initTextures() {
         this.texture = new CGFtexture(this.scene, "images/terrain.jpg");
         this.heightMap = new CGFtexture(this.scene, "images/heightmap.jpg");
+        this.altimetry = new CGFtexture(this.scene, "images/altimetry.png");
+
     }
 
     initShaders() {
@@ -25,8 +27,9 @@ export class MyTerrain extends CGFobject {
     display() {
         this.scene.setActiveShader(this.shader);
         this.scene.pushMatrix();
-        this.texture.bind(1);
-        this.heightMap.bind(2);
+        this.texture.bind(0);
+        this.heightMap.bind(1);
+        this.altimetry.bind(2);
         this.scene.pushMatrix();
         this.scene.rotate(-Math.PI / 2.0, 1, 0, 0);
         this.scene.scale(50, 50, 8);

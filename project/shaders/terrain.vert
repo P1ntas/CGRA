@@ -11,14 +11,19 @@ uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
 varying vec2 vTextureCoord;
+uniform sampler2D uSampler;
+uniform sampler2D uSampler1;
 uniform sampler2D uSampler2;
+
+varying float alt;
 
 
 void main() {
 
     vTextureCoord = aTextureCoord;
 
-    vec3 offset = aVertexNormal * texture2D(uSampler2, vTextureCoord).r;
+    vec3 offset = aVertexNormal * texture2D(uSampler1, vTextureCoord).b;
+    alt = aVertexNormal.z * texture2D(uSampler1, vTextureCoord).b;
 
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition + offset, 1.0);
 }

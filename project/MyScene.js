@@ -2,6 +2,8 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MySphere } from "./MySphere.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyTerrain } from "./MyTerrain.js";
+import { MyBirdEgg } from "./MyBirdEgg.js";
+import { MyNest } from "./MyNest.js";
 
 /**
  * MyScene
@@ -29,26 +31,35 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.terrain = new MyTerrain(this, 20);
+    this.terrain = new MyTerrain(this, 60);
     this.sphere = new MySphere(this, 16, 8, 1, "sphere");
     this.panorama = new MyPanorama(this, this.texPanorama);
+    this.nest = new MyNest(this, 32, 16, 3);
+
+    this.eggs = [];
+    for(var i = 0; i < 4;i++) {
+        this.eggs.push(new MyBirdEgg(this, 32, 16, 1));
+    }
+
+    this.positions = [[4, 4.9, 3], [12, 4.1, -2], [-11, 3.9, -5], [-4, 3.5, 5]];
+    this.rotations = [0, 0, 1, 0,
+                       1, -Math.PI / 4.0, 0, 0, 
+                       1, 1, Math.PI / 4.0, 0, 
+                       1, 0, 0, 1];
 
     //Objects connected to MyInterface
     this.displayAxis = false;
 
     this.displayNormals  = false;
 
-    this.displayTerrain = true;
     this.displaySphere = false;
     this.displayPanorama = false;
+    this.displayTerrain = true;
+    this.displayNest = true;
+
     this.scaleFactor = 1;
 
     this.enableTextures(true);
-
-/*this.texture = new CGFtexture(this, "images/terrain.jpg");
-this.appearance = new CGFappearance(this);
-this.appearance.setTexture(this.texture);
-this.appearance.setTextureWrap('REPEAT', 'REPEAT');*/
 
 this.texture2 = new CGFtexture(this, "images/earth.jpg")
 this.appearance2 = new CGFappearance(this);
@@ -59,7 +70,15 @@ this.appearance3 = new CGFappearance(this);
 this.appearance3.setTexture(this.texPanorama);
 this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
 
+this.texture4 = new CGFtexture(this, "images/nest.jpg")
+this.appearance4 = new CGFappearance(this);
+this.appearance4.setTexture(this.texture4);
+this.appearance4.setTextureWrap('REPEAT', 'REPEAT');
 
+this.texture5 = new CGFtexture(this, "images/egg.jpeg")
+
+this.shader1 = new CGFshader(this.gl, "shaders/egg.vert", "shaders/egg.frag");
+this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2: 2});
 
   }
   initLights() {
@@ -83,6 +102,8 @@ this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+
+
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -101,22 +122,20 @@ this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
       this.sphere.enableNormalViz();
       this.panorama.sphere.enableNormalViz();
       this.terrain.plane.enableNormalViz();
+      for (var i = 0; i < 4; i++){
+        this.eggs[i].enableNormalViz;
+      }
     }
     else {
       this.sphere.disableNormalViz();
       this.panorama.sphere.disableNormalViz();
       this.terrain.plane.disableNormalViz();
+      for (var i = 0; i < 4; i++) {
+        this.eggs[i].disableNormalViz();
+      }
     }
 
     // ---- BEGIN Primitive drawing section
-
-    /*this.pushMatrix();
-    this.appearance.apply();
-    this.translate(0,-100,0);
-    this.scale(400,400,400);
-    this.rotate(-Math.PI/2.0,1,0,0);
-    if(this.displayPlane) this.plane.display();
-    this.popMatrix();*/
 
     this.pushMatrix();
     this.appearance2.apply();
@@ -132,6 +151,24 @@ this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
     if (this.displayTerrain) this.terrain.display();
     this.setActiveShader(this.defaultShader);
     this.popMatrix();
+
+    if (this.displayTerrain) {
+      for (var i = 0; i < this.eggs.length; i++) {
+        this.pushMatrix();
+        this.setActiveShader(this.shader1);
+        this.texture5.bind(0);
+        this.translate(this.positions[i][0], this.positions[i][1], this.positions[i][2]);
+        this.rotate(this.rotations[i * 4], this.rotations[i * 4 + 1], this.rotations[i * 4 + 2], this.rotations[i * 4 + 3]);
+        this.eggs[i].display();
+        this.setActiveShader(this.defaultShader);
+        this.popMatrix();
+      }
+      this.pushMatrix();
+      this.translate(10, 5.5, 7);
+      this.appearance4.apply();
+      this.nest.display();
+      this.popMatrix();
+  }
 
     // ---- END Primitive drawing section
   }

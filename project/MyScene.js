@@ -4,6 +4,7 @@ import { MyPanorama } from "./MyPanorama.js";
 import { MyTerrain } from "./MyTerrain.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyNest } from "./MyNest.js";
+import { MyBillboard } from "./MyBillboard.js";
 
 /**
  * MyScene
@@ -35,6 +36,7 @@ export class MyScene extends CGFscene {
     this.sphere = new MySphere(this, 16, 8, 1, "sphere");
     this.panorama = new MyPanorama(this, this.texPanorama);
     this.nest = new MyNest(this, 32, 16, 3);
+    this.billboard = new MyBillboard(this);
 
     this.eggs = [];
     for(var i = 0; i < 4;i++) {
@@ -54,8 +56,7 @@ export class MyScene extends CGFscene {
 
     this.displaySphere = false;
     this.displayPanorama = false;
-    this.displayTerrain = true;
-    this.displayNest = true;
+    this.displayTerrain = false;
 
     this.scaleFactor = 1;
 
@@ -103,6 +104,10 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
     this.setShininess(10.0);
   }
 
+  updateTexCoords() {
+    this.quad.updateTexCoords(this.texCoords);
+  }
+
 
   display() {
     // ---- BEGIN Background, camera and axis setup
@@ -125,6 +130,9 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       for (var i = 0; i < 4; i++){
         this.eggs[i].enableNormalViz;
       }
+      this.nest.outside.enableNormalViz();
+      this.nest.inside.enableNormalViz();
+      this.billboard.quad.enableNormalViz();
     }
     else {
       this.sphere.disableNormalViz();
@@ -133,6 +141,9 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       for (var i = 0; i < 4; i++) {
         this.eggs[i].disableNormalViz();
       }
+      this.nest.outside.disableNormalViz();
+      this.nest.inside.disableNormalViz();
+      this.billboard.quad.disableNormalViz();
     }
 
     // ---- BEGIN Primitive drawing section
@@ -168,7 +179,14 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.appearance4.apply();
       this.nest.display();
       this.popMatrix();
+
+      /*this.pushMatrix();
+      this.billboard.display();
+      this.popMatrix();*/
   }
+  this.pushMatrix();
+  this.billboard.display();
+  this.popMatrix();
 
     // ---- END Primitive drawing section
   }

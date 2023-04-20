@@ -32,9 +32,9 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.terrain = new MyTerrain(this, 60);
     this.sphere = new MySphere(this, 16, 8, 1, "sphere");
     this.panorama = new MyPanorama(this, this.texPanorama);
+    this.terrain = new MyTerrain(this, 20);
     this.nest = new MyNest(this, 32, 16, 3);
     this.billboard = new MyBillboard(this);
 

@@ -2,8 +2,12 @@ import {CGFobject,  CGFappearance, CGFtexture} from '../lib/CGF.js';
 import { MyQuad } from './MyQuad.js';
 
 export class MyBillboard extends CGFobject {
-  constructor(scene) {
+  constructor(scene, x, y, z) {
     super(scene);
+
+    this.x = x;
+    this.y = y;
+    this.z = z;
 
     this.quad = new MyQuad(scene);
 
@@ -11,7 +15,7 @@ export class MyBillboard extends CGFobject {
     this.initTextures(scene);
   }
   initTextures(scene) {
-    this.texture = new CGFtexture(this, "images/nest.jpg")
+    this.texture = new CGFtexture(this.scene, "images/billboardtree.png")
     this.tex = new CGFappearance(scene);
     this.tex.setAmbient(1.0, 1.0, 1.0, 1);
     this.tex.setDiffuse(0.9, 0.9, 0.9, 1);
@@ -27,13 +31,16 @@ export class MyBillboard extends CGFobject {
 
 
     display() {
-      this.scene.pushMatrix()
-
-
-      //this.tex.apply()
+      this.scene.pushMatrix();
+    
+      
+    
+      // Draw the quad
+      this.tex.apply();
       this.quad.display();
-
+    
       this.scene.popMatrix();
-  }
+    }
+    
 
   }

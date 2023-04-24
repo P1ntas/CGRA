@@ -5,6 +5,7 @@ import { MyTerrain } from "./MyTerrain.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyNest } from "./MyNest.js";
 import { MyBillboard } from "./MyBillboard.js";
+import { MyBird } from "./MyBird.js";
 
 /**
  * MyScene
@@ -37,6 +38,7 @@ export class MyScene extends CGFscene {
     this.terrain = new MyTerrain(this, 20);
     this.nest = new MyNest(this, 32, 16, 3);
     this.billboard = new MyBillboard(this);
+    this.Bird = new MyBird(this);
 
     this.eggs = [];
     for(var i = 0; i < 4;i++) {
@@ -57,10 +59,11 @@ export class MyScene extends CGFscene {
     this.displaySphere = false;
     this.displayPanorama = false;
     this.displayTerrain = false;
+    this.displayBird = true;
 
     this.scaleFactor = 1;
 
-    this.enableTextures(true);
+    this.enableTextures(false);
 
 this.texture2 = new CGFtexture(this, "images/earth.jpg")
 this.appearance2 = new CGFappearance(this);
@@ -90,7 +93,7 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
   }
   initCameras() {
     this.camera = new CGFcamera(
-      1.0,
+      0.1,
       0.1,
       1000,
       vec3.fromValues(50, 10, 15),
@@ -123,6 +126,8 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
+    
+
     if (this.displayNormals) {
       this.sphere.enableNormalViz();
       this.panorama.sphere.enableNormalViz();
@@ -146,6 +151,8 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.billboard.quad.disableNormalViz();
     }
 
+    
+    
     // ---- BEGIN Primitive drawing section
 
     this.pushMatrix();
@@ -183,11 +190,18 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       /*this.pushMatrix();
       this.billboard.display();
       this.popMatrix();*/
-  }
+  }/*
   this.pushMatrix();
   this.billboard.display();
   this.popMatrix();
-
+  */
+  
+  this.pushMatrix();
+  this.setActiveShader(this.defaultShader);
+  if(this.displayBird) this.Bird.display();
+  this.popMatrix();
     // ---- END Primitive drawing section
+    
   }
+  
 }

@@ -162,6 +162,7 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
 
     this.pushMatrix();
     this.appearance3.apply();
+    this.translate(this.camera.position[0], this.camera.position[1], this.camera.position[2]);
     if (this.displayPanorama) this.panorama.display();
     this.popMatrix();
 
@@ -190,11 +191,11 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       /*this.pushMatrix();
       this.billboard.display();
       this.popMatrix();*/
-  }/*
+  }
   this.pushMatrix();
   this.billboard.display();
   this.popMatrix();
-  */
+  
   
   
   this.pushMatrix();

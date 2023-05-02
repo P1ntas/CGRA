@@ -26,15 +26,15 @@ export class MyBird extends CGFobject {
     this.BirdOutterRightWing = new MyTriangleBig(this.scene);
     //Objects connected to MyInterface
     
-    this.displayBody = true;
-    this.displayHead = true;
-    this.displayBeack = true;
-    this.displayLeftTail = true;
-    this.displayRightTail = true;
+    this.displayBody = false;
+    this.displayHead = false;
+    this.displayBeack = false;
+    this.displayLeftTail = false;
+    this.displayRightTail = false;
     this.displayInnerLeftWing = true;
-    this.displayInnerRightWing = true;
-    this.displayOutterLeftWing = true;
-    this.displayOutterRightWing = true;
+    this.displayInnerRightWing = false;
+    this.displayOutterLeftWing = false;
+    this.displayOutterRightWing = false;
 
 
     this.time = 0;
@@ -140,6 +140,7 @@ export class MyBird extends CGFobject {
       this.scene.translate(0,this.wingsPosition,0);
       this.scene.rotate(Math.PI/2,1,0,0);
       this.scene.rotate(Math.PI/4,0,0,1);
+      
       this.scene.scale(0.5,0.5,0.5);
 
       this.BirdInnerLeftWing.display();

@@ -138,6 +138,7 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.nest.outside.enableNormalViz();
       this.nest.inside.enableNormalViz();
       this.billboard.quad.enableNormalViz();
+      this.Bird.BirdInnerLeftWing.enableNormalViz();
     }
     else {
       this.sphere.disableNormalViz();

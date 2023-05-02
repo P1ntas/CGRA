@@ -39,10 +39,9 @@ export class MyBird extends CGFobject {
 
     this.time = 0;
     this.velocity = 0.01;
-    this.direction = "up";
+   
     this.wingAngle = 0;
-    this.maxBodyHeight = 2;
-    this
+   
     this.bodyPosition = 0;
     this.beackPosition = 0;
     this.tailPosition = 0;

@@ -72,8 +72,9 @@ export class MyBird extends CGFobject {
     this.bodyMotion();
     this.beackMotion();
     this.tailMotion();
-    this.display();
     this.wingsMotion();
+    this.display();
+    
 
 
   }

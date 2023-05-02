@@ -38,6 +38,7 @@ export class MyBird extends CGFobject {
 
 
     this.time = 0;
+    this.velocity = 0.01;
     this.direction = "up";
     this.wingAngle = 0;
     this.maxBodyHeight = 2;
@@ -45,14 +46,17 @@ export class MyBird extends CGFobject {
     this.bodyPosition = 0;
     this.beackPosition = 0;
     this.tailPosition = 0;
+    this.wingsPosition = 0;
 
   }
 
-  flapWings() {
+  wingsMotion() {
     
     if (this.wingAngle > this.maxWingAngle) {
       this.wingAngle = -this.maxWingAngle;
     }
+
+    this.wingsPosition = Math.sin(this.time)/2;
   }
   bodyMotion(){
    
@@ -65,11 +69,12 @@ export class MyBird extends CGFobject {
     this.tailPosition = Math.sin(this.time)*2;
   }
   update(){
-    this.time +=0.01;
+    this.time +=this.velocity;
     this.bodyMotion();
     this.beackMotion();
     this.tailMotion();
     this.display();
+    this.wingsMotion();
 
 
   }
@@ -132,9 +137,11 @@ export class MyBird extends CGFobject {
 
       this.scene.pushMatrix();
       this.scene.translate(1,0,0);
+      this.scene.translate(0,this.wingsPosition,0);
       this.scene.rotate(Math.PI/2,1,0,0);
       this.scene.rotate(Math.PI/4,0,0,1);
       this.scene.scale(0.5,0.5,0.5);
+
       this.BirdInnerLeftWing.display();
       this.scene.popMatrix();
 
@@ -146,6 +153,7 @@ export class MyBird extends CGFobject {
 
       this.scene.pushMatrix();
       this.scene.translate(-1,0,0);
+      this.scene.translate(0,this.wingsPosition,0);
       this.scene.rotate(Math.PI/2,1,0,0);
       this.scene.rotate(-Math.PI/4,0,0,1);
       this.scene.scale(0.5,0.5,0.5);
@@ -159,6 +167,7 @@ export class MyBird extends CGFobject {
 
       this.scene.pushMatrix();
       this.scene.translate(-1.7,0,-0.29);
+      this.scene.translate(0,this.wingsPosition,0);
       this.scene.rotate(Math.PI/2,1,0,0);
       
       this.scene.scale(0.5,0.5,0.5);
@@ -172,6 +181,7 @@ export class MyBird extends CGFobject {
 
       this.scene.pushMatrix();
       this.scene.translate(1.7,0,-0.29);
+      this.scene.translate(0,this.wingsPosition,0);
       this.scene.rotate(Math.PI/2,1,0,0);
       
       this.scene.scale(0.5,0.5,0.5);

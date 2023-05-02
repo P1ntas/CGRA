@@ -63,7 +63,7 @@ export class MyScene extends CGFscene {
 
     this.scaleFactor = 1;
 
-    this.enableTextures(false);
+    this.enableTextures(true);
 
 this.texture2 = new CGFtexture(this, "images/earth.jpg")
 this.appearance2 = new CGFappearance(this);
@@ -198,9 +198,10 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
   
   
   this.pushMatrix();
-  this.setActiveShader(this.defaultShader);
+  
   if(this.displayBird){
     this.Bird.update();
+    
     this.Bird.display();
   } 
   this.popMatrix();

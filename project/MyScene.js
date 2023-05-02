@@ -60,6 +60,7 @@ export class MyScene extends CGFscene {
     this.displayPanorama = false;
     this.displayTerrain = false;
     this.displayBird = true;
+    this.displayBillboard = false;
 
     this.scaleFactor = 1;
 
@@ -138,7 +139,6 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.nest.outside.enableNormalViz();
       this.nest.inside.enableNormalViz();
       this.billboard.quad.enableNormalViz();
-      this.Bird.BirdInnerLeftWing.enableNormalViz();
     }
     else {
       this.sphere.disableNormalViz();
@@ -194,7 +194,7 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.popMatrix();*/
   }
   this.pushMatrix();
-  this.billboard.display();
+  if (this.displayBillboard) this.billboard.display();
   this.popMatrix();
   
   

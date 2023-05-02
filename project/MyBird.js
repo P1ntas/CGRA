@@ -36,13 +36,52 @@ export class MyBird extends CGFobject {
     this.displayOutterLeftWing = true;
     this.displayOutterRightWing = true;
 
+
+    this.time = 0;
+    this.direction = "up";
+    this.wingAngle = 0;
+    this.maxBodyHeight = 2;
+    this
+    this.bodyPosition = 0;
+    this.beackPosition = 0;
+    this.tailPosition = 0;
+
   }
+
+  flapWings() {
+    
+    if (this.wingAngle > this.maxWingAngle) {
+      this.wingAngle = -this.maxWingAngle;
+    }
+  }
+  bodyMotion(){
+   
+   this.bodyPosition = Math.sin(this.time);
+  }
+  beackMotion(){
+    this.beackPosition = Math.sin(this.time) * 2;
+  }
+  tailMotion(){
+    this.tailPosition = Math.sin(this.time)*2;
+  }
+  update(){
+    this.time +=0.01;
+    this.bodyMotion();
+    this.beackMotion();
+    this.tailMotion();
+    this.display();
+
+
+  }
+
+
   display() {
     
     
     if(this.displayBody){
         this.scene.pushMatrix();
         this.scene.scale(0.5,0.5,1.1);
+        this.scene.translate(0,this.bodyPosition,0);
         this.BirdBody.display();
         this.scene.popMatrix();
     }
@@ -50,6 +89,7 @@ export class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.scene.scale(0.4,0.4,0.5);
         this.scene.translate(0,0,2);
+        this.scene.translate(0,this.bodyPosition,0);
         this.BirdHead.display();
         this.scene.popMatrix();
     }
@@ -58,6 +98,7 @@ export class MyBird extends CGFobject {
         this.scene.scale(0.2,0.2,0.6);
         this.scene.rotate(Math.PI,0,1,1);
         this.scene.translate(0,2,-0.5);
+        this.scene.translate(0,0,this.beackPosition);
         this.BirdBeack.display();
         this.scene.popMatrix();
     }
@@ -70,7 +111,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI/4,0,0,1);
         
         this.scene.scale(0.3,0.3,0.3);
-        
+        this.scene.translate(0,0,this.tailPosition);
         this.BirdLeftTail.display();
         this.scene.popMatrix();
     }
@@ -82,7 +123,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(-Math.PI/4,0,0,1);
         
         this.scene.scale(0.3,0.3,0.3);
-        
+        this.scene.translate(0,0,this.tailPosition);
         this.BirdLeftTail.display();
         this.scene.popMatrix();
     }
@@ -94,9 +135,10 @@ export class MyBird extends CGFobject {
       this.scene.rotate(Math.PI/2,1,0,0);
       this.scene.rotate(Math.PI/4,0,0,1);
       this.scene.scale(0.5,0.5,0.5);
-      
       this.BirdInnerLeftWing.display();
       this.scene.popMatrix();
+
+      
 
     }
 
@@ -138,6 +180,7 @@ export class MyBird extends CGFobject {
       this.scene.popMatrix();
 
     }
+
     
   }
 }

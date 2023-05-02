@@ -196,9 +196,13 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
   this.popMatrix();
   */
   
+  
   this.pushMatrix();
   this.setActiveShader(this.defaultShader);
-  if(this.displayBird) this.Bird.display();
+  if(this.displayBird){
+    this.Bird.update();
+    this.Bird.display();
+  } 
   this.popMatrix();
     // ---- END Primitive drawing section
     

@@ -52,7 +52,7 @@ export class MyScene extends CGFscene {
                        1, 0, 0, 1];
 
     //Objects connected to MyInterface
-    this.displayAxis = false;
+    this.displayAxis = true;
 
     this.displayNormals  = false;
 
@@ -139,6 +139,7 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.nest.outside.enableNormalViz();
       this.nest.inside.enableNormalViz();
       this.billboard.quad.enableNormalViz();
+      this.Bird.enableNormalViz();
     }
     else {
       this.sphere.disableNormalViz();

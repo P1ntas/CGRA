@@ -1,6 +1,7 @@
 import { CGFobject, CGFscene } from '../lib/CGF.js';
 import { MySphere} from './MySphere.js';
 import { MyCone } from './MyCone.js';
+import { MyWing } from './MyWing.js'
 import { MyTriangleBig } from './MyTriangleBig.js';
 /**
  * MyTangram
@@ -20,21 +21,18 @@ export class MyBird extends CGFobject {
 
     this.BirdLeftTail = new MyTriangleBig(this.scene);
     this.BirdRightTail = new MyTriangleBig(this.scene);
-    this.BirdInnerLeftWing = new MyTriangleBig(this.scene);
-    this.BirdInnerRightWing = new MyTriangleBig(this.scene);
-    this.BirdOutterLeftWing = new MyTriangleBig(this.scene);
-    this.BirdOutterRightWing = new MyTriangleBig(this.scene);
+    this.BirdLeftWing = new MyWing(this.scene,false);
+    this.BirdRightWing = new MyWing(this.scene,true);
+  
     //Objects connected to MyInterface
     
-    this.displayBody = false;
-    this.displayHead = false;
-    this.displayBeack = false;
-    this.displayLeftTail = false;
-    this.displayRightTail = false;
-    this.displayInnerLeftWing = true;
-    this.displayInnerRightWing = false;
-    this.displayOutterLeftWing = false;
-    this.displayOutterRightWing = false;
+    this.displayBody = true;
+    this.displayHead = true;
+    this.displayBeack = true;
+    this.displayLeftTail = true;
+    this.displayRightTail = true;
+    this.displayRightWing = true;
+    this.displayLeftWing = true;
 
 
     this.time = 0;
@@ -51,9 +49,10 @@ export class MyBird extends CGFobject {
 
   wingsMotion() {
     
-    if (this.wingAngle > this.maxWingAngle) {
-      this.wingAngle = -this.maxWingAngle;
-    }
+    this.wingAngle = Math.PI * Math.sin(this.time)/4;
+
+    this.BirdRightWing.update();
+    this.BirdLeftWing.update();
 
     this.wingsPosition = Math.sin(this.time)/2;
   }
@@ -73,10 +72,6 @@ export class MyBird extends CGFobject {
     this.beackMotion();
     this.tailMotion();
     this.wingsMotion();
-    this.display();
-    
-
-
   }
 
 
@@ -85,7 +80,7 @@ export class MyBird extends CGFobject {
     
     if(this.displayBody){
         this.scene.pushMatrix();
-        this.scene.scale(0.5,0.5,1.1);
+        this.scene.scale(0.4,0.5,1.1);
         this.scene.translate(0,this.bodyPosition,0);
         this.BirdBody.display();
         this.scene.popMatrix();
@@ -133,65 +128,25 @@ export class MyBird extends CGFobject {
         this.scene.popMatrix();
     }
 
-    if(this.displayInnerLeftWing){
-
+    if(this.displayRightWing) {
       this.scene.pushMatrix();
-      this.scene.translate(1,0,0);
-      this.scene.translate(0,this.wingsPosition,0);
-      this.scene.rotate(Math.PI/2,1,0,0);
-      this.scene.rotate(Math.PI/4,0,0,1);
-      
-      this.scene.scale(0.5,0.5,0.5);
-
-      this.BirdInnerLeftWing.display();
+      this.scene.translate(-0.2,this.wingsPosition,0);
+      this.scene.rotate(this.wingAngle,0,0,1);
+      this.BirdRightWing.display();
       this.scene.popMatrix();
-
-      
-
+    }
+    if(this.displayLeftWing) {
+      this.scene.pushMatrix();
+      this.scene.translate(0.2,this.wingsPosition,0);
+      this.scene.rotate(Math.PI,0,0,1);
+      this.scene.rotate(-this.wingAngle,0,0,1);
+      this.BirdLeftWing.display();
+      this.scene.popMatrix();
     }
 
-    if(this.displayInnerRightWing){
-
-      this.scene.pushMatrix();
-      this.scene.translate(-1,0,0);
-      this.scene.translate(0,this.wingsPosition,0);
-      this.scene.rotate(Math.PI/2,1,0,0);
-      this.scene.rotate(-Math.PI/4,0,0,1);
-      this.scene.scale(0.5,0.5,0.5);
-      
-      this.BirdInnerRightWing.display();
-      this.scene.popMatrix();
-
-    }
-
-    if(this.displayOutterLeftWing){
-
-      this.scene.pushMatrix();
-      this.scene.translate(-1.7,0,-0.29);
-      this.scene.translate(0,this.wingsPosition,0);
-      this.scene.rotate(Math.PI/2,1,0,0);
-      
-      this.scene.scale(0.5,0.5,0.5);
-      
-      this.BirdOutterLeftWing.display();
-      this.scene.popMatrix();
-
-    }
-
-    if(this.displayOutterRightWing){
-
-      this.scene.pushMatrix();
-      this.scene.translate(1.7,0,-0.29);
-      this.scene.translate(0,this.wingsPosition,0);
-      this.scene.rotate(Math.PI/2,1,0,0);
-      
-      this.scene.scale(0.5,0.5,0.5);
-      
-      this.BirdOutterRightWing.display();
-      this.scene.popMatrix();
-
-    }
-
-    
+  }
+  enableNormalViz() {
+    this.BirdRightWing.enableNormalViz();
+  
   }
 }

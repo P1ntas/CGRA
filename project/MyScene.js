@@ -6,6 +6,8 @@ import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyNest } from "./MyNest.js";
 import { MyBillboard } from "./MyBillboard.js";
 import { MyBird } from "./MyBird.js";
+import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
+import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
 
 /**
  * MyScene
@@ -37,8 +39,10 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texPanorama);
     this.terrain = new MyTerrain(this, 20);
     this.nest = new MyNest(this, 32, 16, 3);
-    this.billboard = new MyBillboard(this);
+    this.billboard = new MyBillboard(this, 1, 1, 1);
     this.Bird = new MyBird(this);
+    this.group = new MyTreeGroupPatch(this);
+    this.row = new MyTreeRowPatch(this);
 
     this.eggs = [];
     for(var i = 0; i < 4;i++) {
@@ -140,6 +144,8 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.nest.inside.enableNormalViz();
       this.billboard.quad.enableNormalViz();
       this.Bird.enableNormalViz();
+      this.group.enableNormalViz();
+      this.row.enableNormalViz();
     }
     else {
       this.sphere.disableNormalViz();
@@ -151,6 +157,9 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.nest.outside.disableNormalViz();
       this.nest.inside.disableNormalViz();
       this.billboard.quad.disableNormalViz();
+      this.Bird.disableNormalViz();
+      this.group.disableNormalViz();
+      this.row.disableNormalViz();
     }
 
     
@@ -190,9 +199,8 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.nest.display();
       this.popMatrix();
 
-      /*this.pushMatrix();
-      this.billboard.display();
-      this.popMatrix();*/
+      this.group.display();
+      this.row.display();
   }
   this.pushMatrix();
   if (this.displayBillboard) this.billboard.display();

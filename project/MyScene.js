@@ -39,7 +39,7 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texPanorama);
     this.terrain = new MyTerrain(this, 20);
     this.nest = new MyNest(this, 32, 16, 3);
-    this.billboard = new MyBillboard(this, 1, 1, 1);
+    this.billboard = new MyBillboard(this, 0, 0,0);
     this.Bird = new MyBird(this);
     this.group = new MyTreeGroupPatch(this);
     this.row = new MyTreeRowPatch(this);
@@ -212,7 +212,6 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
   
   if(this.displayBird){
     this.Bird.update();
-    
     this.Bird.display();
   } 
   this.popMatrix();

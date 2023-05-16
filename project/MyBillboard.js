@@ -33,12 +33,14 @@
       display() {
         this.scene.pushMatrix();
       
-        /*let direction = [
-          this.scene.camera.position[0] - this.x,
+        let direction = [
+          this.scene.camera.position[0] - this.scene.camera.target[0],
           0,
-          this.scene.camera.position[2] - this.z
+          this.scene.camera.position[2] - this.scene.camera.target[2]
       ];
-  
+
+      console.log(this.scene.camera.direction);
+      console.log(direction);
       // Normalize the direction
       let length = Math.sqrt(direction[0]*direction[0] + direction[2]*direction[2]);
       direction[0] /= length;
@@ -46,12 +48,11 @@
   
       // Calculate the rotation angle
       let angle = Math.acos(direction[2]); // Assuming the quad's normal is along the positive z-axis
-  
+      if (direction[0] < 0) angle = -angle;
       // Rotate the quad to face the camera
-      //this.scene.rotate(angle, 0, 1, 0);*/
-      
-        // Draw the quad
-        this.scene.translate(this.x, this.z, this.y);
+      this.scene.translate(this.x, this.z, this.y);
+      this.scene.rotate(angle, 0, 1, 0);
+        
         this.tex.apply();
         this.quad.display();
       

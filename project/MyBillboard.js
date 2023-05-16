@@ -52,7 +52,7 @@
       // Rotate the quad to face the camera
       this.scene.translate(this.x, this.z, this.y);
       this.scene.rotate(angle, 0, 1, 0);
-        
+        this.scene.scale(2, 2, 2);
         this.tex.apply();
         this.quad.display();
       

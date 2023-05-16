@@ -49,7 +49,7 @@ export class MyScene extends CGFscene {
         this.eggs.push(new MyBirdEgg(this, 32, 16, 1));
     }
 
-    this.positions = [[4, 4.9, 3], [12, 4.1, -2], [-11, 3.9, -5], [-4, 3.5, 5]];
+    this.positions = [[4, 4.35, 3], [12, 3.65, -2], [-11, 3.6, -5], [-4, 3.2, 5]];
     this.rotations = [0, 0, 1, 0,
                        1, -Math.PI / 4.0, 0, 0, 
                        1, 1, Math.PI / 4.0, 0, 
@@ -62,8 +62,8 @@ export class MyScene extends CGFscene {
 
     this.displaySphere = false;
     this.displayPanorama = false;
-    this.displayTerrain = false;
-    this.displayBird = true;
+    this.displayTerrain = true;
+    this.displayBird = false;
     this.displayBillboard = false;
 
     this.scaleFactor = 1;
@@ -98,7 +98,7 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
   }
   initCameras() {
     this.camera = new CGFcamera(
-      0.1,
+      1,
       0.1,
       1000,
       vec3.fromValues(50, 10, 15),
@@ -189,12 +189,13 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
         this.texture5.bind(0);
         this.translate(this.positions[i][0], this.positions[i][1], this.positions[i][2]);
         this.rotate(this.rotations[i * 4], this.rotations[i * 4 + 1], this.rotations[i * 4 + 2], this.rotations[i * 4 + 3]);
+        this.scale(0.5, 0.5, 0.5)
         this.eggs[i].display();
         this.setActiveShader(this.defaultShader);
         this.popMatrix();
       }
       this.pushMatrix();
-      this.translate(10, 5.5, 7);
+      this.translate(10, 5.4, 7);
       this.appearance4.apply();
       this.nest.display();
       this.popMatrix();

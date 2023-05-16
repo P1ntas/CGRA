@@ -1,4 +1,4 @@
-import { CGFobject, CGFscene } from '../lib/CGF.js';
+import { CGFobject, CGFappearance } from '../lib/CGF.js';
 import { MySphere} from './MySphere.js';
 import { MyCone } from './MyCone.js';
 import { MyWing } from './MyWing.js'
@@ -45,6 +45,15 @@ export class MyBird extends CGFobject {
     this.tailPosition = 0;
     this.wingsPosition = 0;
 
+    this.initTextures(scene);
+  }
+
+  initTextures(scene) {
+    this.beack = new CGFappearance(scene);
+    this.beack.setAmbient(1, 165 / 255, 0, 1);
+    this.beack.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.beack.setSpecular(1, 1, 1, 1);
+    this.beack.setShininess(10.0);
   }
 
   wingsMotion() {
@@ -82,6 +91,7 @@ export class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.scene.scale(0.4,0.5,1.1);
         this.scene.translate(0,this.bodyPosition,0);
+        this.beack.apply();
         this.BirdBody.display();
         this.scene.popMatrix();
     }
@@ -99,6 +109,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI,0,1,1);
         this.scene.translate(0,2,-0.5);
         this.scene.translate(0,0,this.beackPosition);
+        this.beack.apply();
         this.BirdBeack.display();
         this.scene.popMatrix();
     }

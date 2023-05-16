@@ -17,6 +17,7 @@ export class MyCone extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
+        this.textCoords = [];
 
         var ang = 0;
         var alphaAng = 2*Math.PI/this.slices;
@@ -46,6 +47,10 @@ export class MyCone extends CGFobject {
         this.initBuffers();
         this.initNormalVizBuffers();
     }
+    updateTextCoords(coords) {
+        this.textCoords = [...coords];
+        this.updateTexCoordsGLBuffers
+      }
 }
 
 

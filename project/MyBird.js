@@ -36,7 +36,7 @@ export class MyBird extends CGFobject {
 
 
     this.time = 0;
-    this.velocity = 0.01;
+    this.velocity = 0.02;
    
     this.wingAngle = 0;
    
@@ -51,8 +51,8 @@ export class MyBird extends CGFobject {
     
     this.wingAngle = Math.PI * Math.sin(this.time)/4;
 
-    this.BirdRightWing.update();
-    this.BirdLeftWing.update();
+    this.BirdRightWing.update(this.velocity);
+    this.BirdLeftWing.update(this.velocity);
 
     this.wingsPosition = Math.sin(this.time)/2;
   }

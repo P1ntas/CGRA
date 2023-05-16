@@ -20,7 +20,7 @@ export class MyWing extends CGFobject {
     this.right = right;
 
     this.time = 0;
-    this.velocity = 0.01;
+    
    
     this.wingAngle = 0;
     this.wingsPosition = 0;
@@ -32,8 +32,8 @@ export class MyWing extends CGFobject {
 
   }
 
-  update(){
-    this.time +=this.velocity;
+  update(value){
+    this.time +=value;
     this.wingsMotion();
   }
 

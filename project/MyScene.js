@@ -4,7 +4,6 @@ import { MyPanorama } from "./MyPanorama.js";
 import { MyTerrain } from "./MyTerrain.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyNest } from "./MyNest.js";
-import { MyBillboard } from "./MyBillboard.js";
 import { MyBird } from "./MyBird.js";
 import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
 import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
@@ -39,7 +38,6 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texPanorama);
     this.terrain = new MyTerrain(this, 20);
     this.nest = new MyNest(this, 32, 16, 3);
-    this.billboard = new MyBillboard(this, 0, 0,0);
     this.Bird = new MyBird(this);
     this.group = new MyTreeGroupPatch(this);
     this.row = new MyTreeRowPatch(this);
@@ -56,15 +54,14 @@ export class MyScene extends CGFscene {
                        1, 0, 0, 1];
 
     //Objects connected to MyInterface
-    this.displayAxis = true;
+    this.displayAxis = false;
 
     this.displayNormals  = false;
 
     this.displaySphere = false;
-    this.displayPanorama = false;
+    this.displayPanorama = true;
     this.displayTerrain = true;
     this.displayBird = false;
-    this.displayBillboard = false;
 
     this.scaleFactor = 1;
 
@@ -142,7 +139,6 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       }
       this.nest.outside.enableNormalViz();
       this.nest.inside.enableNormalViz();
-      this.billboard.quad.enableNormalViz();
       this.Bird.enableNormalViz();
       this.group.enableNormalViz();
       this.row.enableNormalViz();
@@ -156,7 +152,6 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       }
       this.nest.outside.disableNormalViz();
       this.nest.inside.disableNormalViz();
-      this.billboard.quad.disableNormalViz();
       this.Bird.disableNormalViz();
       this.group.disableNormalViz();
       this.row.disableNormalViz();
@@ -177,12 +172,9 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
     if (this.displayPanorama) this.panorama.display();
     this.popMatrix();
 
-    this.pushMatrix();
-    if (this.displayTerrain) this.terrain.display();
-    this.setActiveShader(this.defaultShader);
-    this.popMatrix();
-
     if (this.displayTerrain) {
+      this.terrain.display();
+      this.setActiveShader(this.defaultShader);
       for (var i = 0; i < this.eggs.length; i++) {
         this.pushMatrix();
         this.setActiveShader(this.shader1);
@@ -203,9 +195,6 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       this.group.display();
       this.row.display();
   }
-  this.pushMatrix();
-  if (this.displayBillboard) this.billboard.display();
-  this.popMatrix();
   
   
   

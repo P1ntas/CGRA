@@ -7,6 +7,7 @@ import { MyNest } from "./MyNest.js";
 import { MyBird } from "./MyBird.js";
 import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
 import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
+import { MyBillboard } from "./MyBillboard.js";
 
 /**
  * MyScene
@@ -41,6 +42,8 @@ export class MyScene extends CGFscene {
     this.Bird = new MyBird(this);
     this.group = new MyTreeGroupPatch(this);
     this.row = new MyTreeRowPatch(this);
+    
+    this.billboard = new MyBillboard(this, 0, 0, 0);
 
     this.eggs = [];
     for(var i = 0; i < 4;i++) {
@@ -98,7 +101,7 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
       1,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
+      vec3.fromValues(50, 210, 15),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -168,7 +171,8 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
 
     this.pushMatrix();
     this.appearance3.apply();
-    this.translate(this.camera.position[0], this.camera.position[1], this.camera.position[2]);
+    //this.translate(this.camera.position[0], this.camera.position[1], this.camera.position[2]);
+    this.translate(0, 60, 0)
     if (this.displayPanorama) this.panorama.display();
     this.popMatrix();
 
@@ -179,19 +183,21 @@ this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2
         this.pushMatrix();
         this.setActiveShader(this.shader1);
         this.texture5.bind(0);
-        this.translate(this.positions[i][0], this.positions[i][1], this.positions[i][2]);
+        this.translate(this.positions[i][0] * 8, this.positions[i][1] * 8, this.positions[i][2] * 8);
         this.rotate(this.rotations[i * 4], this.rotations[i * 4 + 1], this.rotations[i * 4 + 2], this.rotations[i * 4 + 3]);
-        this.scale(0.5, 0.5, 0.5)
+        this.scale(0.5 * 8, 0.5 * 8, 0.5 * 8)
         this.eggs[i].display();
         this.setActiveShader(this.defaultShader);
         this.popMatrix();
       }
       this.pushMatrix();
-      this.translate(10, 5.4, 7);
+      this.translate(10 * 8, 5.4  * 8, 7 * 8);
+      this.scale(8.2, 8.2, 8.2);
       this.appearance4.apply();
       this.nest.display();
       this.popMatrix();
-
+      this.billboard.display();
+      this.setActiveShader(this.defaultShader);
       this.group.display();
       this.row.display();
   }

@@ -32,7 +32,7 @@ export class MyTerrain extends CGFobject {
         this.altimetry.bind(2);
         this.scene.pushMatrix();
         this.scene.rotate(-Math.PI / 2.0, 1, 0, 0);
-        this.scene.scale(50, 50, 8);
+        this.scene.scale(400, 400, 64);
         this.plane.display();
         this.scene.popMatrix();
     }

@@ -7,8 +7,6 @@ varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 uniform sampler2D uSampler1;
 
-varying float alt; 
-
 void main() {
     vec4 texColor = texture2D(uSampler, vTextureCoord);
 

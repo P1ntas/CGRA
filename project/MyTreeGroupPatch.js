@@ -1,4 +1,4 @@
-import {CGFobject,  CGFappearance} from '../lib/CGF.js';
+import {CGFobject,  CGFtexture, CGFshader} from '../lib/CGF.js';
 import { MyBillboard } from './MyBillboard.js';
 
 export class MyTreeGroupPatch extends CGFobject {
@@ -12,7 +12,7 @@ export class MyTreeGroupPatch extends CGFobject {
         let billboard = new MyBillboard(this.scene, this.positions[i][0], this.positions[i][2], this.positions[i][1]);
         this.trees.push(billboard);
     }
-  }
+    }
 
   enableNormalViz() {
     this.trees.forEach(billboard => {
@@ -30,11 +30,9 @@ disableNormalViz() {
 
     display() {
         this.scene.pushMatrix()
-
         this.trees.forEach(billboard => {
             billboard.display()
         });
-
         this.scene.popMatrix();
     }
 

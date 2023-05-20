@@ -1,4 +1,4 @@
-import {CGFobject} from '../lib/CGF.js';
+import {CGFobject, CGFtexture, CGFshader} from '../lib/CGF.js';
 import { MyBillboard } from './MyBillboard.js';
 
 export class MyTreeRowPatch extends CGFobject {
@@ -12,7 +12,10 @@ export class MyTreeRowPatch extends CGFobject {
         let billboard = new MyBillboard(this.scene, this.positions[i][0], this.positions[i][2], this.positions[i][1]);
         this.trees.push(billboard);
     }
-  }
+    //this.initTextures();
+
+    //this.initShaders();
+    }
 
   enableNormalViz() {
     this.trees.forEach(billboard => {
@@ -29,11 +32,11 @@ disableNormalViz() {
 
 
     display() {
-
+        //this.scene.setActiveShader(this.trees[0].shader);
         this.trees.forEach(billboard => {
             billboard.display()
         });
-
+        //this.scene.setActiveShader(this.scene.defaultShader);
     }
 
   }

@@ -12,26 +12,13 @@
       this.quad = new MyQuad(scene);
 
 
-      this.initTextures(scene);
+      this.initTextures();
 
-      this.initShaders();
     }
-    initTextures(scene) {
+    initTextures() {
       this.texture = new CGFtexture(this.scene, "images/billboardtree.png")
-      this.tex = new CGFappearance(scene);
-      this.tex.setAmbient(1.0, 1.0, 1.0, 1);
-      this.tex.setDiffuse(0.9, 0.9, 0.9, 1);
-      this.tex.setSpecular(1, 1, 1, 1);
-      this.tex.setShininess(10.0);
-      this.tex.setTexture(this.texture);
-      this.tex.setTextureWrap('REPEAT', 'REPEAT');
+
       this.heightMap = new CGFtexture(this.scene, "images/heightmap.jpg");
-    }
-
-    initShaders() {
-
-      this.shader = new CGFshader(this.scene.gl, "shaders/billboard.vert", "shaders/billboard.frag");
-      this.shader.setUniformsValues({uSampler1: 1, treePosition: [this.x, this.z]});
     }
 
     updateTexCoords() {
@@ -40,8 +27,10 @@
 
 
       display() {
-        this.scene.setActiveShader(this.shader);
+        
         this.scene.pushMatrix();
+        //this.scene.setActiveShader(this.shader);
+        this.scene.shader2.setUniformsValues({uSampler: 0, uSampler1: 1, treePosition: [this.x, this.z]});
         this.texture.bind(0);
         this.heightMap.bind(1);
         let direction = [
@@ -49,9 +38,6 @@
           0,
           this.scene.camera.position[2] - this.scene.camera.target[2]
       ];
-
-      console.log(this.scene.camera.direction);
-      console.log(direction);
       // Normalize the direction
       let length = Math.sqrt(direction[0]*direction[0] + direction[2]*direction[2]);
       direction[0] /= length;
@@ -61,14 +47,16 @@
       let angle = Math.acos(direction[2]); // Assuming the quad's normal is along the positive z-axis
       if (direction[0] < 0) angle = -angle;
       // Rotate the quad to face the camera
-      this.scene.translate(this.x * 8, this.z * 8, this.y * 8);
+      //this.scene.translate(this.x * 8, this.z * 8, this.y * 8);
+      this.scene.translate(this.x * 8, 0, this.y * 8);
       this.scene.rotate(angle, 0, 1, 0);
         this.scene.scale(2 * 8, 2 * 8, 2 * 8);
         
         //this.tex.apply();
         this.quad.display();
-      
+        //this.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
+        
       }
       
 

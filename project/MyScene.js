@@ -39,7 +39,9 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texPanorama);
     this.terrain = new MyTerrain(this, 20);
     this.nest = new MyNest(this, 32, 16, 3);
-    this.Bird = new MyBird(this);
+    
+    this.birdHeight = 45;
+    this.Bird = new MyBird(this,[0,this.birdHeight,0],0.0);
     this.group = new MyTreeGroupPatch(this);
     this.row = new MyTreeRowPatch(this);
 
@@ -50,7 +52,17 @@ export class MyScene extends CGFscene {
         this.eggs.push(new MyBirdEgg(this, 32, 16, 1));
     }
 
-    this.positions = [[4, 4.35, 3], [12, 3.65, -2], [-11, 3.6, -5], [-4, 3.2, 5]];
+    this.positions = [[4, 3.95, 3], [12, 3.15, -2], [-11, 3.1, -5], [-4, 2.8, 5]];
+    for (var i = 0;i < this.positions.length;i++) 
+      for (var j = 0; j<3;j++) this.positions[i][j] *= 8;
+
+    this.nestPosition = [10 * 9, 24.5, 7 * 7];
+    this.fallingEgg = null;
+    this.fallingEggPosition = [0,0,0]
+    this.fallingEggSpeed = [0,0,0]
+    this.fallingEggTime = 0;
+    this.fallingTime = 20;
+  
     this.rotations = [0, 0, 1, 0,
                        1, -Math.PI / 4.0, 0, 0, 
                        1, 1, Math.PI / 4.0, 0, 
@@ -64,34 +76,34 @@ export class MyScene extends CGFscene {
     this.displaySphere = false;
     this.displayPanorama = true;
     this.displayTerrain = true;
-    this.displayBird = false;
+    this.displayBird = true;
 
     this.scaleFactor = 1;
 
     this.enableTextures(true);
 
-this.texture2 = new CGFtexture(this, "images/earth.jpg")
-this.appearance2 = new CGFappearance(this);
-this.appearance2.setTexture(this.texture2);
-this.appearance2.setTextureWrap('REPEAT', 'REPEAT');
+    this.texture2 = new CGFtexture(this, "images/earth.jpg")
+    this.appearance2 = new CGFappearance(this);
+    this.appearance2.setTexture(this.texture2);
+    this.appearance2.setTextureWrap('REPEAT', 'REPEAT');
 
-this.appearance3 = new CGFappearance(this);
-this.appearance3.setTexture(this.texPanorama);
-this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance3 = new CGFappearance(this);
+    this.appearance3.setTexture(this.texPanorama);
+    this.appearance3.setTextureWrap('REPEAT', 'REPEAT');
 
-this.texture4 = new CGFtexture(this, "images/nest.jpg")
-this.appearance4 = new CGFappearance(this);
-this.appearance4.setTexture(this.texture4);
-this.appearance4.setTextureWrap('REPEAT', 'REPEAT');
+    this.texture4 = new CGFtexture(this, "images/nest.jpg")
+    this.appearance4 = new CGFappearance(this);
+    this.appearance4.setTexture(this.texture4);
+    this.appearance4.setTextureWrap('REPEAT', 'REPEAT');
 
-this.texture5 = new CGFtexture(this, "images/egg.jpeg")
+    this.texture5 = new CGFtexture(this, "images/egg.jpeg")
 
-this.shader1 = new CGFshader(this.gl, "shaders/egg.vert", "shaders/egg.frag");
-this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2: 2});
+    this.shader1 = new CGFshader(this.gl, "shaders/egg.vert", "shaders/egg.frag");
+    this.shader1.setUniformsValues({uSampler: this.texture5, uSampler1: 1, uSampler2: 2});
 
-this.shader2 = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboard.frag");
+    this.shader2 = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboard.frag");
 
-
+    this.setUpdatePeriod(50);
   }
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
@@ -117,6 +129,162 @@ this.shader2 = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboa
 
   updateTexCoords() {
     this.quad.updateTexCoords(this.texCoords);
+  }
+
+  checkKeys(){
+
+    
+    var keysPressed =false;
+    var keysArr=[];
+    var text = "Keys: "
+    if(this.gui.isKeyPressed("KeyW")){
+      keysArr.push("W");
+      keysPressed = true;
+      text += " W ";
+
+    }
+    if(this.gui.isKeyPressed("KeyA")){
+      keysArr.push("A");
+      keysPressed = true;
+      text += " A ";
+
+    }
+    if(this.gui.isKeyPressed("KeyS")){
+      keysArr.push("S");
+      keysPressed =true;
+      text += " S ";
+
+    }
+    if(this.gui.isKeyPressed("KeyD")){
+      keysArr.push("D");
+      keysPressed =true;
+      text += " D ";
+
+
+    }
+    if(this.gui.isKeyPressed("KeyP"))
+    {
+      keysArr.push("P");
+      keysPressed =true;
+      text += " P ";
+
+    }
+    if(this.gui.isKeyPressed("KeyO"))
+    {
+      keysArr.push("O");
+      keysPressed =true;
+      text += " O ";
+
+    }
+    if(this.gui.isKeyPressed("KeyR"))
+    {
+      keysArr.push("R");
+      keysPressed = true;
+      text += " R ";
+    }
+
+    if(keysPressed){
+      console.log(text);
+      this.updateBird(keysArr);
+    }
+
+  }
+
+  updateBird(keysArr){
+    if(keysArr.includes("O"))
+    {
+
+    }
+    if(keysArr.includes("R"))
+    {
+      this.Bird.reset();
+    }
+    if(keysArr.includes("W"))
+    {
+      this.Bird.accelerate();
+    }
+    if(keysArr.includes("A"))
+    {
+      this.Bird.turn("left");
+    }
+    if(keysArr.includes("S"))
+    {
+      this.Bird.brake();
+    }
+    if(keysArr.includes("D"))
+    {
+      this.Bird.turn("right");
+    }
+    if(keysArr.includes("P"))
+    {
+      this.Bird.goDown();
+    }
+    if(keysArr.includes("O"))
+    {
+      this.dropBirdEgg();
+    }
+  }
+
+  enoughDist(x1,z1,x2,z2, minDist) {
+    var dist = Math.sqrt(Math.pow(x1-x2,2) + Math.pow(z1-z2,2));
+    return dist < minDist;
+  }
+  eggClose() {
+    for (var i = 0; i < this.positions.length; i++) {
+      if (this.enoughDist(
+      this.positions[i][0], this.positions[i][2],
+      this.Bird.birdPosition[0],this.Bird.birdPosition[2],
+      10)) {
+        this.positions.splice(i,1);
+        var egg = this.eggs.splice(i,1);
+        if (egg.length == 0) return null;
+        return egg[0];
+      }
+    }
+    return null;
+  }
+  dropBirdEgg(){
+    if (this.Bird.hasAnEgg() && this.enoughDist(
+      this.Bird.birdPosition[0],this.Bird.birdPosition[2],
+      this.nestPosition[0],this.nestPosition[2],
+    15)) {
+      this.fallingEgg = this.Bird.dropEgg();
+      this.fallingEggPosition = [...this.Bird.birdPosition];
+      this.fallingEggPosition[1] -= 0.5;
+      for (var i = 0; i < 3; i++) {
+        this.fallingEggSpeed[i] = (this.nestPosition[i] - this.fallingEggPosition[i]) / this.fallingTime;
+      }
+      this.fallingEggTime = this.fallingTime;
+    }
+  }
+  updateFallingEgg() {
+    if (this.fallingEgg != null ) {
+      for (var i = 0; i < 3; i++) {
+        this.fallingEggPosition[i] += this.fallingEggSpeed[i];
+      }
+      console.log("falling",this.fallingEggPosition);
+      this.fallingEggTime--;
+      if (this.fallingEggTime == 0) {
+        this.nest.addEgg(this.fallingEgg);
+        this.fallingEgg = null;
+      }
+    }
+  }
+
+  update(time){
+    
+    this.checkKeys();
+
+    this.Bird.update();
+
+    this.updateFallingEgg();
+    
+    //update camera
+    this.camera.setPosition(vec3.fromValues(
+      this.Bird.birdPosition[0] - Math.sin(this.Bird.birdAngle)*40, 
+      this.Bird.birdPosition[1] + 15, 
+      this.Bird.birdPosition[2] - Math.cos(this.Bird.birdAngle)*40));
+    this.camera.setTarget(vec3.fromValues(...this.Bird.birdPosition));
   }
 
 
@@ -153,7 +321,7 @@ this.shader2 = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboa
       this.sphere.disableNormalViz();
       this.panorama.sphere.disableNormalViz();
       this.terrain.plane.disableNormalViz();
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < this.eggs.length; i++) {
         this.eggs[i].disableNormalViz();
       }
       this.nest.outside.disableNormalViz();
@@ -186,20 +354,21 @@ this.shader2 = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboa
       for (var i = 0; i < this.eggs.length; i++) {
         this.pushMatrix();
         this.texture5.bind(0);
-        this.translate(this.positions[i][0] * 8, this.positions[i][1] * 8, this.positions[i][2] * 8);
+        this.translate(this.positions[i][0], this.positions[i][1], this.positions[i][2]);
         this.rotate(this.rotations[i * 4], this.rotations[i * 4 + 1], this.rotations[i * 4 + 2], this.rotations[i * 4 + 3]);
-        this.scale(0.5 * 8, 0.5 * 8, 0.5 * 8)
+        this.scale(0.8, 0.8 , 0.8 );
         this.eggs[i].display();
         
         this.popMatrix();
       }
       this.setActiveShader(this.defaultShader);
+
       this.pushMatrix();
-      this.translate(10 * 8, 5.4  * 8, 7 * 8);
-      this.scale(8.2, 8.2, 8.2);
+      this.translate(...this.nestPosition);
       this.appearance4.apply();
       this.nest.display();
       this.popMatrix();
+
       this.setActiveShader(this.shader2);
       this.group.display();
       this.row.display();
@@ -211,10 +380,17 @@ this.shader2 = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboa
   
   this.pushMatrix();
   
-  if(this.displayBird){
-    this.Bird.update();
+  if(this.displayBird){    
     this.Bird.display();
   } 
+  if (this.fallingEgg != null) {
+    this.pushMatrix();
+    this.texture5.bind(0);
+    this.translate(...this.fallingEggPosition);
+    this.scale(0.8, 0.8 , 0.8 );
+    this.fallingEgg.display();
+    this.popMatrix();
+  }
   this.popMatrix();
     // ---- END Primitive drawing section
     

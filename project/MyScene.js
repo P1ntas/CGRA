@@ -380,9 +380,6 @@ export class MyScene extends CGFscene {
   
   this.pushMatrix();
   
-  if(this.displayBird){    
-    this.Bird.display();
-  } 
   if (this.fallingEgg != null) {
     this.pushMatrix();
     this.texture5.bind(0);
@@ -391,6 +388,9 @@ export class MyScene extends CGFscene {
     this.fallingEgg.display();
     this.popMatrix();
   }
+  if(this.displayBird){    
+    this.Bird.display();
+  } 
   this.popMatrix();
     // ---- END Primitive drawing section
     

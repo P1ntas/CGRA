@@ -52,7 +52,7 @@ export class MyScene extends CGFscene {
         this.eggs.push(new MyBirdEgg(this, 32, 16, 1));
     }
 
-    this.positions = [[4, 3.95, 3], [12, 3.15, -2], [-11, 3.1, -5], [-4, 2.8, 5]];
+    this.positions = [[-2, 3.1, -7], [12, 3.15, -2], [-11, 3.1, -5], [-4, 2.8, 5]];
     for (var i = 0;i < this.positions.length;i++) 
       for (var j = 0; j<3;j++) this.positions[i][j] *= 8;
 
@@ -234,7 +234,7 @@ export class MyScene extends CGFscene {
       if (this.enoughDist(
       this.positions[i][0], this.positions[i][2],
       this.Bird.birdPosition[0],this.Bird.birdPosition[2],
-      10)) {
+      5)) {
         this.positions.splice(i,1);
         var egg = this.eggs.splice(i,1);
         if (egg.length == 0) return null;

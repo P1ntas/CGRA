@@ -68,8 +68,8 @@ export class MyBird extends CGFobject {
     
     this.wingAngle = Math.PI * Math.sin(this.time)/4;
 
-    this.BirdRightWing.update(this.velocity);
-    this.BirdLeftWing.update(this.velocity);
+    this.BirdRightWing.update(this.time);
+    this.BirdLeftWing.update(this.time);
 
     this.wingsPosition = Math.sin(this.time)/2;
   }
@@ -85,20 +85,20 @@ export class MyBird extends CGFobject {
     this.tailPosition = Math.sin(this.time) ;
   }
   update(){
-    this.time +=this.velocity;
+    this.time += 0.2 + this.velocity;
     this.bodyMotion();
     this.beackMotion();
     this.tailMotion();
     this.wingsMotion();
 
     // update horizontal position
-    this.birdPosition[0] += this.velocity * Math.sin(this.birdAngle);
-    this.birdPosition[2] += this.velocity * Math.cos(this.birdAngle);
+    this.birdPosition[0] += this.velocity * Math.sin(this.birdAngle) * 3;
+    this.birdPosition[2] += this.velocity * Math.cos(this.birdAngle) * 3;
   
     // update vertical position
     if (this.goingDown) {
       this.goingDownTime += 0.1;
-      this.birdPosition[1] = this.scene.birdHeight - Math.sin(this.goingDownTime) * 5;
+      this.birdPosition[1] = this.scene.birdHeight - Math.sin(this.goingDownTime) * 15;
       if (this.goingDownTime > Math.PI) {
         this.goingDown = false;
         this.birdPosition[1] = this.scene.birdHeight;
@@ -126,7 +126,7 @@ export class MyBird extends CGFobject {
   }
 
   accelerate(){
-    this.velocity += 0.03;
+    this.velocity += 0.01;
   }
   reset(){
     this.velocity = 0;

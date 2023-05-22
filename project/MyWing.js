@@ -33,7 +33,7 @@ export class MyWing extends CGFobject {
   }
 
   update(value){
-    this.time +=value;
+    this.time =value;
     this.wingsMotion();
   }
 
